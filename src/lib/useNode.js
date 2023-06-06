@@ -31,18 +31,6 @@ export const useNode = () => {
     target.current = null
   }
 
-  const onClick = () => {
-    setNodes({
-      ...nodes,
-      [crypto.randomUUID()]: {
-        position: {
-          x: 0,
-          y: 0,
-        },
-      },
-    })
-  }
-
   return {
     nodes,
     setNodes,
@@ -50,7 +38,6 @@ export const useNode = () => {
       onPointerMove,
       onPointerDown,
       onPointerUp,
-      onClick,
     },
   }
 }

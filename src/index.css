@@ -4,9 +4,6 @@
 
 @layer components {
   .editor {
-    @apply bg-rose-100 h-screen relative;
-  }
-  .button {
-    @apply px-4 py-2 border border-black absolute left-0 bottom-0;
+    @apply bg-[#fafafa] h-screen relative;
   }
 }
