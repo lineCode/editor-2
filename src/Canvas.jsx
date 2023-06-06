@@ -1,4 +1,4 @@
-import Header1 from './components/Header1'
+import Header from './components/Header'
 import Node from './components/Node'
 import { useNode } from './lib/useNode'
 
@@ -13,7 +13,7 @@ const Canvas = () => {
       onPointerMove={event.onPointerMove}
     >
       {/* Header 1 */}
-      <Header1 />
+      <Header />
 
       {/* Header 2 */}
 
