@@ -3,7 +3,7 @@ const Node = ({ uuid, value }) => {
 
   return (
     <div
-      className='w-40 h-60 bg-slate-200 absolute rounded-lg cursor-pointer hover:z-10  outline-1 outline-double outline-slate-400'
+      className='w-40 h-60 bg-slate-200 absolute rounded-lg cursor-pointer hover:z-10  shadow-xl border border-slate-300'
       data-name='node'
       data-uuid={uuid}
       style={{

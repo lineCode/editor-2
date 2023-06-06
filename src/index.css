@@ -3,7 +3,4 @@
 @tailwind utilities;
 
 @layer components {
-  .editor {
-    @apply bg-[#fafafa] h-screen relative;
-  }
 }

@@ -1,3 +1,4 @@
+import Header1 from './components/Header1'
 import Node from './components/Node'
 import { useNode } from './lib/useNode'
 
@@ -6,14 +7,25 @@ const Canvas = () => {
 
   return (
     <div
-      className='editor'
+      className='bg-[#fafafa] h-screen relative'
       onPointerDown={event.onPointerDown}
       onPointerUp={event.onPointerUp}
       onPointerMove={event.onPointerMove}
     >
+      {/* Header 1 */}
+      <Header1 />
+
+      {/* Header 2 */}
+
+      {/* Header 3 */}
+
+      {/* Nodes */}
+
       {Object.entries(nodes).map(([uuid, value]) => (
         <Node key={uuid} uuid={uuid} value={value} />
       ))}
+
+      {/* Button */}
 
       <button
         onClick={() => {
@@ -27,7 +39,7 @@ const Canvas = () => {
             },
           })
         }}
-        className='px-4 py-2 border absolute left-[45%] top-10 bg-slate-900 text-white rounded active:scale-95 hover:bg-slate-400 transition'
+        className='px-4 py-2 border absolute left-10 bottom-10 bg-slate-900 text-white rounded active:scale-95 hover:bg-slate-400 transition'
       >
         Create Node
       </button>
