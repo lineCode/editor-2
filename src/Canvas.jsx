@@ -1,6 +1,6 @@
 import Header from './components/Header'
 import Node from './components/Node'
-import { useNode } from './lib/useNode'
+import { useNode } from './hooks/useNode'
 
 const Canvas = () => {
   const { nodes, setNodes, event } = useNode()
@@ -15,17 +15,13 @@ const Canvas = () => {
       {/* Header 1 */}
       <Header />
 
-      {/* Header 2 */}
-
-      {/* Header 3 */}
-
       {/* Nodes */}
 
       {Object.entries(nodes).map(([uuid, value]) => (
         <Node key={uuid} uuid={uuid} value={value} />
       ))}
 
-      {/* Button */}
+      {/* Create Node Button */}
 
       <button
         onClick={() => {
@@ -39,7 +35,7 @@ const Canvas = () => {
             },
           })
         }}
-        className='px-4 py-2 border absolute left-10 bottom-10 bg-slate-900 text-white rounded active:scale-95 hover:bg-slate-400 transition'
+        className='px-4 py-2 border absolute right-10 bottom-10 bg-slate-900 text-white rounded active:scale-95 hover:bg-slate-400 transition'
       >
         Create Node
       </button>

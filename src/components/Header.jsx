@@ -1,24 +1,37 @@
-import { useState } from 'react'
-import { BiChevronDown, BiChevronUp, BiSquareRounded } from 'react-icons/bi'
+import { Fragment, useState } from 'react'
+import { BiSquareRounded } from 'react-icons/bi'
 import { GoDash, GoX } from 'react-icons/go'
+import { nodeData } from '../data/nodeData'
 
-import { MdOutlineCalculate } from 'react-icons/md'
-import { TbMouse2, TbKeyboard, TbLogicAnd, TbCurrentLocation, TbStatusChange } from 'react-icons/tb'
-import { RiPlayCircleLine } from 'react-icons/ri'
-import { LuTimer, LuGitCompare, LuPalette } from 'react-icons/lu'
-import { BiCamera } from 'react-icons/bi'
-import { CgSun, CgHashtag } from 'react-icons/cg'
-import { FiBox } from 'react-icons/fi'
-import { GiPerspectiveDiceSixFacesRandom } from 'react-icons/gi'
-import { RxAngle } from 'react-icons/rx'
-import { IoResize } from 'react-icons/io5'
-import { VscLibrary } from 'react-icons/vsc'
+import { LuFileSpreadsheet, LuLeaf } from 'react-icons/lu'
+import { TbHistory } from 'react-icons/tb'
+import { VscTypeHierarchySub } from 'react-icons/vsc'
+
+const colors = [
+  'bg-rose-500',
+  'bg-cyan-500',
+  'bg-indigo-500',
+  'bg-fuchsia-500',
+  'bg-violet-500',
+  'bg-amber-500',
+  'bg-red-500',
+  'bg-zinc-500',
+]
+
+const MENU = {
+  NODE: 'node',
+  SHEET: 'sheet',
+  HISTORY: 'history',
+  HIERARCHY: 'hierarchy',
+  DEFAULT: 'default',
+}
 
 const Header = () => {
-  const [isExpand, setIsExpand] = useState(true)
+  const [menu, setMenu] = useState(MENU.DEFAULT)
 
   return (
     <div className='fixed top-0 left-0 right-0 z-50'>
+      {/* Top Header */}
       <div className='bg-[#6D71F9] flex text-white px-4 py-2 justify-between items-center select-none shadow'>
         <div className='flex gap-4 items-center'>
           <h1 className='font-semibold'>Editor</h1>
@@ -34,9 +47,8 @@ const Header = () => {
 
           <div className='text-white text-xs font-bold flex gap-3'>
             <button>캔버스</button>
-            <button onClick={() => setIsExpand((prev) => !prev)} className='text-yellow-300 flex items-center'>
+            <button className='text-yellow-300 flex items-center'>
               <span>인터랙션 에디터</span>
-              {isExpand ? <BiChevronUp className='text-xl' /> : <BiChevronDown className='text-xl' />}
             </button>
           </div>
         </div>
@@ -54,145 +66,87 @@ const Header = () => {
         </div>
       </div>
 
-      {isExpand && (
-        <div className='flex shadow border-b border-gray-300 items-center select-none bg-white'>
-          <Box>
-            <button className='flex flex-col gap-2 items-center w-12'>
-              <TbMouse2 className='text-2xl' />
-              <span className='text-xs font-bold'>마우스</span>
-            </button>
-            <button className='flex flex-col gap-2 items-center w-12'>
-              <TbKeyboard className='text-2xl' />
-              <span className='text-xs font-bold'>키보드</span>
-            </button>
-            <button className='flex flex-col gap-2 items-center w-12'>
-              <RiPlayCircleLine className='text-2xl' />
-              <span className='text-xs font-bold'>시작</span>
-            </button>
-            <button className='flex flex-col gap-2 items-center w-12'>
-              <LuTimer className='text-2xl' />
-              <span className='text-xs font-bold'>타이머</span>
-            </button>
-          </Box>
-          <Line />
-          <Box>
-            <button className='flex flex-col gap-2 items-center w-12'>
-              <BiCamera className='text-2xl' />
-              <span className='text-xs font-bold'>카메라</span>
-            </button>
-            <button className='flex flex-col gap-2 items-center w-12'>
-              <CgSun className='text-2xl' />
-              <span className='text-xs font-bold'>광원</span>
-            </button>
-            <button className='flex flex-col gap-2 items-center w-12'>
-              <FiBox className='text-2xl' />
-              <span className='text-xs font-bold'>오브젝트</span>
-            </button>
-          </Box>
-          <Line />
-          <div className='p-4 flex flex-col items-center gap-3'>
-            <div className='flex gap-2'>
-              <button className='flex flex-col gap-2 items-center w-12'>
-                <MdOutlineCalculate className='text-2xl' />
-                <span className='text-xs font-bold'>연산</span>
-              </button>
+      <div className='flex absolute left-0 gap-1 p-1 pt-2 pl-2'>
+        <div className='flex flex-col pr-0 gap-1 h-48'>
+          <button
+            onClick={() => (menu === MENU.NODE ? setMenu(MENU.DEFAULT) : setMenu(MENU.NODE))}
+            className={`bg-slate-400 hover:text-indigo-200 text-white w-10 h-10 rounded text-xl flex items-center justify-center ${
+              menu === MENU.NODE && 'bg-slate-800'
+            }`}
+          >
+            <LuLeaf />
+          </button>
+          <button
+            onClick={() => (menu === MENU.SHEET ? setMenu(MENU.DEFAULT) : setMenu(MENU.SHEET))}
+            className={`bg-slate-400 hover:text-indigo-200 text-white w-10 h-10 rounded text-xl flex items-center justify-center ${
+              menu === MENU.SHEET && 'bg-slate-800'
+            }`}
+          >
+            <LuFileSpreadsheet />
+          </button>
+          <button
+            onClick={() => (menu === MENU.HISTORY ? setMenu(MENU.DEFAULT) : setMenu(MENU.HISTORY))}
+            className={`bg-slate-400 hover:text-indigo-200 text-white w-10 h-10 rounded text-xl flex items-center justify-center ${
+              menu === MENU.HISTORY && 'bg-slate-800'
+            }`}
+          >
+            <TbHistory />
+          </button>
+          <button
+            onClick={() => (menu === MENU.HIERARCHY ? setMenu(MENU.DEFAULT) : setMenu(MENU.HIERARCHY))}
+            className={`bg-slate-400 hover:text-indigo-200 text-white w-10 h-10 rounded text-xl flex items-center justify-center ${
+              menu === MENU.HIERARCHY && 'bg-slate-800'
+            }`}
+          >
+            <VscTypeHierarchySub />
+          </button>
+        </div>
+
+        {/* Sidebar */}
+        {menu === MENU.NODE && (
+          <div className='w-[22rem] flex'>
+            <div className='select-none grid grid-cols-4 gap-[.05rem] content-start'>
+              {nodeData.map(({ type, nodes }, i) => (
+                <Fragment key={type}>
+                  {nodes.map(({ name, Image, letter }) => (
+                    <button
+                      key={name}
+                      className={`text-slate-100 flex items-center gap-1 border border-slate-300 p-2 rounded justify-center flex-col aspect-square shadow-lg hover:opacity-80 ${colors[i]}`}
+                    >
+                      {letter ? <Image text={letter} /> : <Image className='text-xl' />}
+                      <span className='text-xs text-center'>{name}</span>
+                    </button>
+                  ))}
+                </Fragment>
+                //
+              ))}
             </div>
           </div>
-          <Line />
-          <Box>
-            <button className='flex flex-col gap-2 items-center w-12'>
-              <CgHashtag className='text-2xl' />
-              <span className='text-xs font-bold'>수치</span>
-            </button>
-          </Box>
-          <Line />
-          <Box>
-            <button className='flex flex-col gap-2 items-center w-12'>
-              <TbLogicAnd className='text-2xl' />
-              <span className='text-xs font-bold'>AND/OR</span>
-            </button>
-            <button className='flex flex-col gap-2 items-center w-12'>
-              <GiPerspectiveDiceSixFacesRandom className='text-2xl' />
-              <span className='text-xs font-bold'>랜덤</span>
-            </button>
-            <button className='flex flex-col gap-2 items-center w-12'>
-              <LuGitCompare className='text-2xl' />
-              <span className='text-xs font-bold'>비교</span>
-            </button>
-          </Box>
-          <Line />
-          <Box>
-            <button className='flex flex-col gap-2 items-center w-12'>
-              <TbCurrentLocation className='text-2xl' />
-              <span className='text-xs font-bold'>위치</span>
-            </button>
-            <button className='flex flex-col gap-2 items-center w-12'>
-              <RxAngle className='text-2xl' />
-              <span className='text-xs font-bold'>각도</span>
-            </button>
-            <button className='flex flex-col gap-2 items-center w-12'>
-              <IoResize className='text-2xl' />
-              <span className='text-xs font-bold'>스케일</span>
-            </button>
-          </Box>
-          <Line />
-          <Box>
-            <button className='flex flex-col gap-2 items-center w-12'>
-              <Logo text='B' />
-              <span className='text-xs font-bold'>불리언</span>
-            </button>
-            <button className='flex flex-col gap-2 items-center w-12'>
-              <Logo text='N' />
-              <span className='text-xs font-bold'>넘버</span>
-            </button>
-            <button className='flex flex-col gap-2 items-center w-12'>
-              <Logo text='V' />
-              <span className='text-xs font-bold'>벡터</span>
-            </button>
-            <button className='flex flex-col gap-2 items-center w-12'>
-              <LuPalette className='text-2xl' />
-              <span className='text-xs font-bold'>컬러</span>
-            </button>
-          </Box>
-          <Line />
-          <Box>
-            <button className='flex flex-col gap-2 items-center w-12'>
-              <TbStatusChange className='text-2xl' />
-              <span className='text-xs font-bold'>변환</span>
-            </button>
-          </Box>
-          <Line />
-          <Box>
-            <button className='flex flex-col gap-2 items-center w-12'>
-              <VscLibrary className='text-2xl' />
-              <span className='text-xs font-bold'>Library</span>
-            </button>
-          </Box>
-          <Line />
-        </div>
-      )}
+        )}
+      </div>
     </div>
   )
 }
 
-const Box = ({ children }) => {
+const Container = ({ children }) => {
   return (
-    <div className='p-4 py-4 flex flex-col items-center gap-3'>
+    <div className='p-4 flex flex-col items-center gap-3'>
       <div className='flex gap-2'>{children}</div>
     </div>
   )
 }
 
-const Line = () => {
-  return <div className='w-[2px] min-w-[2px] h-16 bg-slate-300' />
+const Button = ({ name, Image, letter }) => {
+  return (
+    <button className='flex flex-col gap-2 items-center w-12'>
+      {letter ? <Image text={letter} /> : <Image className='text-2xl' />}
+      <span className='text-xs font-bold'>{name}</span>
+    </button>
+  )
 }
 
-const Logo = ({ text }) => {
-  return (
-    <div className='font-semibold w-[1.4rem] h-[1.4rem] flex items-center justify-center rounded border-2 border-black'>
-      {text}
-    </div>
-  )
+const DividingLine = () => {
+  return <div className='w-[2px] min-w-[2px] h-16 bg-slate-300' />
 }
 
 export default Header
